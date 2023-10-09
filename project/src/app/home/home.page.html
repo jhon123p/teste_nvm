@@ -1,45 +1,25 @@
 <ion-menu contentId="main-content">
+
   <ion-header>
     <ion-toolbar>
       <ion-title>Menu Content</ion-title>
-      <ion-card color="warning">
-        <ion-card-header>
-          <ion-card-title>Card Title</ion-card-title>
-          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-        </ion-card-header>
-      
-        <ion-card-content>
-          Here's a small text description for the card content. Nothing more, nothing less.
-        </ion-card-content>
-      </ion-card>
-      
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Card Title</ion-card-title>
-          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-        </ion-card-header>
-      
-        <ion-card-content>
-          Here's a small text description for the card content. Nothing more, nothing less.
-        </ion-card-content>
-      </ion-card>
-      
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Card Title</ion-card-title>
-          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-        </ion-card-header>
-      
-        <ion-card-content>
-          Here's a small text description for the card content. Nothing more, nothing less.
-        </ion-card-content>
-      </ion-card>
     </ion-toolbar>
   </ion-header>
+
   <ion-content class="ion-padding">
     <ion-menu-toggle>
-      <ion-button>Click to close the menu</ion-button>
+      <ion-button> Close to Menu </ion-button>
     </ion-menu-toggle>
+
+    <ion-menu-toggle autoHide="false">
+      <ion-button (click) = "novapagina()"> New Lembretes </ion-button>
+    </ion-menu-toggle>
+    
+
+    <ion-menu-toggle>
+      <ion-button> Configurações </ion-button>
+    </ion-menu-toggle>
+
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
@@ -50,6 +30,43 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-menu-toggle>
+      <ion-card color="warning">
+        <ion-card-header>
+          <ion-card-title>Card Title</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <div class="card-content">
+            <ion-img src="caminho_da_imagem.png"></ion-img> <!-- Substitua 'caminho_da_imagem.png' pelo caminho real da imagem -->
+            <p>Here's a small text description for the card content. Nothing more, nothing less.</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      
+        
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Card Title</ion-card-title>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            Here's a small text description for the card content. Nothing more, nothing less.
+          </ion-card-content>
+        </ion-card>
+        
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Card Title</ion-card-title>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            Here's a small text description for the card content. Nothing more, nothing less.
+          </ion-card-content>
+        </ion-card>
+
       <ion-button>Click to open the menu</ion-button>
     </ion-menu-toggle>
   </ion-content>
