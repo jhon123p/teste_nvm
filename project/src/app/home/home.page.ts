@@ -14,6 +14,6 @@ export class HomePage {
   constructor(private rota:NavController) {}
 
   novapagina(){
-    this.rota.navigateForward('/sistema')
+    this.rota.navigateForward('/new-lembrete')
   }
 }

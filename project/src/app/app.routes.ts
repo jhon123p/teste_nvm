@@ -15,7 +15,7 @@ export const routes: Routes = [
     loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
   },
   {
-    path: 'sistema',
-    loadComponent: () => import('./login/login.page').then((m) => m.LoginPage)
+    path: 'new-lembrete',
+    loadComponent: () => import('./new-lembrete/new-lembrete.page').then( m => m.NewLembretePage)
   },
 ];
