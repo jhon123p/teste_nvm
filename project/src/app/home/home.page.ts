@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { DadosService } from '../dados.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  standalone: true,
-  imports: [IonicModule],
 })
 export class HomePage {
-  constructor(private rota:NavController) {}
+  dados: any;
 
-  novapagina(){
-    this.rota.navigateForward('/new-lembrete')
+  constructor( private rota:NavController , private dadosService: DadosService) {
+    
   }
+  navNewLembrete() {
+    this.rota.navigateForward('/new-lembrete');
+  }
+  ionViewWillEnter() {
+    // Recupere os dados do serviço
+    this.dados = this.dadosService.getDados();
+  }
+  visualizarDados() {
+    // Se desejar, você pode adicionar lógica aqui para exibir os dados de outra maneira
+  }
+  
 }

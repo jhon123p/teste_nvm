@@ -1,19 +1,18 @@
-
+<!-- cabecalho do menu-->
 <ion-menu contentId="main-content">
-
   <ion-header>
     <ion-toolbar>
       <ion-title>Menu Content</ion-title>
     </ion-toolbar>
   </ion-header>
-
+<!-- conteudo do menu -->
   <ion-content class="ion-padding">
-    <ion-button (click)="returnHome()">
-        Home
-    </ion-button>
-  </ion-content>
-</ion-menu>
+    <ion-button (click)="returnHome()">CONFIGURAÇOES</ion-button>
 
+  </ion-content>
+
+</ion-menu>
+<!-- pagina inicial-->
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
@@ -22,54 +21,18 @@
       </ion-buttons>
       <ion-title>Menu</ion-title>
     </ion-toolbar>
-    
   </ion-header>
+  <!-- conteudo pagina inical-->
+  <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. 
+    <form (ngSubmit)="submitForm()" [formGroup]="meuForm">
+      <ion-input type="text" formControlName="nome" placeholder="Nome"></ion-input>
+      <ion-input type="text" formControlName="email" placeholder="Email"></ion-input>
+      <ion-input type="text" formControlName="telefone" placeholder="telefone"></ion-input>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*">
 
-  <!-- Parte do cabeçalho dos campos input-->
-  <ion-content class="ion-padding"> 
-    <ion-input
-      type="email"
-      fill="solid"
-      label="Nome"
-      labelPlacement="floating"
-      helperText="Enter a valid email"
-      errorText="Invalid email"
-      ngModel
-      email
-   ></ion-input>
+      <ion-button type="submit">Enviar</ion-button>
+      <ion-button (click)="visualizarDados()">Visualizar Dados Salvos</ion-button>
 
-   <ion-input
-      type="email"
-      fill="solid"
-      label="Email"
-      labelPlacement="floating"
-      helperText="Enter a valid email"
-      errorText="Invalid email"
-      ngModel
-      email
-></ion-input>
-
-<ion-input
-  type="email"
-  fill="solid"
-  label="Email"
-  labelPlacement="floating"
-  helperText="Enter a valid email"
-  errorText="Invalid email"
-  ngModel
-  email
-></ion-input>
-
-<ion-input
-  type="email"
-  fill="solid"
-  label="Email"
-  labelPlacement="floating"
-  helperText="Enter a valid email"
-  errorText="Invalid email"
-  ngModel
-  email
-></ion-input>
+    </form>
   </ion-content>
-
 </div>
