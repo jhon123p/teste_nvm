@@ -25,19 +25,21 @@
     </ion-toolbar>
   </ion-header>
   <!-- conteudo pagina inical-->
-  <ion-content class="ion-padding"> 
-      <ion-button (click)="visualizarDados()">Visualizar Dados</ion-button>
-      <!-- Tabela para exibir os dados -->
-      <ion-list>
-        <ion-item *ngIf="dados">
-          <ion-label>Nome</ion-label>
-          <ion-note>{{ dados.nome }}</ion-note>
-        </ion-item>
-        <ion-item *ngIf="dados">
-          <ion-label>Email</ion-label>
-          <ion-note>{{ dados.email }}</ion-note>
-        </ion-item>
-        <!-- Outros campos e informações do formulário -->
-      </ion-list>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let dado of dadosExibicao">
+        <ion-thumbnail slot="start">
+          <img [src]="dado.imagem" alt="Imagem">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ dado.imagem }}</h2>
+          <p>{{ dado.nome }}</p>
+          <p>{{ dado.email }}</p>
+          <p>{{ dado.telefone }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button (click)="carregarMaisItens()">Carregar Mais</ion-button>  
   </ion-content>
+  
 </div>

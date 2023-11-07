@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class DadosService {
-  private dados: any;
 
-  setDados(dados: any) {
-    this.dados = dados;
+  constructor(private storage: Storage) { }
+
+  // Método para salvar dados
+  salvarDados(dados: any[]) {
+    return this.storage.set('dadosFormulario', dados);
   }
 
-  getDados() {
-    return this.dados;
+  // Método para recuperar dados
+  recuperarDados() {
+    return this.storage.get('dadosFormulario');
   }
 }
+  

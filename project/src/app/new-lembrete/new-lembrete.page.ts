@@ -32,7 +32,17 @@ export class NewLembretePage implements OnInit {
   submitForm() {
     if (this.meuForm.valid) {
       const dadosFormulario = this.meuForm.value;
-      this.dadosService.setDados(dadosFormulario);
+
+      this.dadosService.recuperarDados().then((existingData) => {
+        let dataToSave: any[] = existingData || [];
+  
+        // Adicione os novos dados ao array
+        dataToSave.push(dadosFormulario);
+  
+        this.dadosService.salvarDados(dataToSave).then(() => {
+          console.log('Dados do formulário salvos no Local Storage');
+        });
+      });
   
       if (!dadosFormulario.nome || !dadosFormulario.email) {
         this.mostrarAlerta('Campos Vazios', 'Por favor, preencha todos os campos obrigatórios.');
@@ -71,11 +81,12 @@ export class NewLembretePage implements OnInit {
     } else {
       this.mostrarAlerta('Campos Inválidos', 'Por favor, preencha os campos corretamente.');
     }
+
   }
   
   
   async ngOnInit() {
-    await this.storage.create();
+    //await this.storage.create();
   }
 
   async visualizarDados() {
