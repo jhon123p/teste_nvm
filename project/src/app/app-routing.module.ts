@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'new-lembrete',
     loadChildren: () => import('./new-lembrete/new-lembrete.module').then( m => m.NewLembretePageModule)
   },
+  {
+    path: 'update-item',
+    loadChildren: () => import('./update-item/update-item.module').then( m => m.UpdateItemPageModule)
+  },
 ];
 
 @NgModule({

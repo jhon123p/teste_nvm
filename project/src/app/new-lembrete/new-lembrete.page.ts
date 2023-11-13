@@ -14,7 +14,7 @@ import { DadosService } from '../dados.service';
 export class NewLembretePage implements OnInit {
 
   meuForm: FormGroup;
-  selectedImage: string | ArrayBuffer | null = null;
+  selectedImage: string | ArrayBuffer | null = null;  
 
   constructor(
     private rota:NavController ,
@@ -30,7 +30,7 @@ export class NewLembretePage implements OnInit {
       });
   }
   submitForm() {
-    if (this.meuForm.valid) {
+    if (this.meuForm.valid) {2
       const dadosFormulario = this.meuForm.value;
 
       this.dadosService.recuperarDados().then((existingData) => {
@@ -38,6 +38,7 @@ export class NewLembretePage implements OnInit {
   
         // Adicione os novos dados ao array
         dataToSave.push(dadosFormulario);
+        console.log(dadosFormulario)
   
         this.dadosService.salvarDados(dataToSave).then(() => {
           console.log('Dados do formulário salvos no Local Storage');
@@ -70,12 +71,13 @@ export class NewLembretePage implements OnInit {
         if (this.selectedImage) {
           dadosFormulario.imagem = this.selectedImage; // Adicione a imagem aos dados do formulário
         }
-  
+        console.log(dataToSave)
         dataToSave.push(dadosFormulario); // Adicione os novos dados ao array
-  
         this.storage.set('dadosFormulario', dataToSave).then(() => {
           console.log('Dados do formulário (incluindo a imagem) salvos no Local Storage');
+        
         });
+        console.log(dataToSave)
       });
   
     } else {
