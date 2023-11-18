@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DadosService } from '../dados.service';
+import { Storage } from '@ionic/storage-angular';
+
 
 
 
@@ -15,30 +17,36 @@ export class HomePage  implements OnInit{
   loadedItems: number = 2; // Inicialmente carrega 2 itens
 
 
-  constructor(private dadosService: DadosService , private rota:NavController) { }
+  constructor(private dadosService: DadosService , private rota:NavController , private storage:Storage) { }
 
-  apagar(item: any) {
-    const index = this.dadosExibicao.indexOf(item);
+  async apagar(item: any) {
+    const storedItems = await this.storage.get('dadosFormulario');
+    const index = storedItems.findIndex((element: any) => element.id === item.id);
+  
     if (index !== -1) {
+      // Remove o item da lista exibida
       this.dadosExibicao.splice(index, 1);
-      this.removerItemLocalStorage(item.id); // Aqui o ID único está na propriedade 'id'
+  
+      // Atualiza o armazenamento removendo o item correspondente
+      await this.removerItemLocalStorage(item.id);
       console.log('Item removido da lista e do Local Storage:', item.id);
     }
   }
   
-  removerItemLocalStorage(itemId: string) {
-    const storedItemsString = localStorage.getItem('dadosExibicao');
-    if (storedItemsString) {
-      const storedItems: any[] = JSON.parse(storedItemsString);
-      const indexNoLocalStorage = storedItems.findIndex((element: any) => {
-        return element.id === itemId;
-      });
-      if (indexNoLocalStorage !== -1) {
-        storedItems.splice(indexNoLocalStorage, 1);
-        localStorage.setItem('dadosExibicao', JSON.stringify(storedItems));
-      }
+  async removerItemLocalStorage(itemId: any) {
+    let storedItems = await this.storage.get('dadosFormulario');
+  
+    if (storedItems) {
+      // Filtra os itens, removendo aquele com o ID correspondente
+      storedItems = storedItems.filter((element: any) => element.id !== itemId);
+      
+      // Atualiza os dados no armazenamento
+      await this.storage.set('dadosFormulario', storedItems);
     }
   }
+  
+  
+  
   
   
   ngOnInit() {
