@@ -32,11 +32,14 @@ export class NewLembretePage implements OnInit {
   submitForm() {
     if (this.meuForm.valid) {2
       const dadosFormulario = this.meuForm.value;
+      const uniqueId = Date.now().toString();
 
       this.dadosService.recuperarDados().then((existingData) => {
         let dataToSave: any[] = existingData || [];
   
         // Adicione os novos dados ao array
+        dadosFormulario.id = uniqueId;
+
         dataToSave.push(dadosFormulario);
         console.log(dadosFormulario)
   
