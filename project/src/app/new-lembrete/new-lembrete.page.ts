@@ -78,9 +78,10 @@ export class NewLembretePage implements OnInit {
         dataToSave.push(dadosFormulario); // Adicione os novos dados ao array
         this.storage.set('dadosFormulario', dataToSave).then(() => {
           console.log('Dados do formulário (incluindo a imagem) salvos no Local Storage');
-        
+          window.location.reload();
+          
         });
-        console.log(dataToSave)
+        console.log(dataToSave);
       });
   
     } else {
@@ -88,17 +89,13 @@ export class NewLembretePage implements OnInit {
     }
 
   }
-  
-  
   async ngOnInit() {
     //await this.storage.create();
   }
-
   async visualizarDados() {
     const dadosArmazenados = await this.storage.get('dadosFormulario');
     console.log('Dados armazenados: ', dadosArmazenados);
   }
-
   async mostrarAlerta(titulo: string, mensagem: string) {
     const alert = await this.alertController.create({
       header: titulo,
@@ -108,9 +105,6 @@ export class NewLembretePage implements OnInit {
   
     await alert.present();
   }
-
-  
-  
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -124,5 +118,6 @@ export class NewLembretePage implements OnInit {
   returnHome(){
     this.rota.navigateForward("/home")
   }
+
   
 }

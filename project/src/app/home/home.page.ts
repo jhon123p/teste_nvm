@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DadosService } from '../dados.service';
 import { Storage } from '@ionic/storage-angular';
-
-
+import { RefresherEventDetail } from '@ionic/core';
 
 
 @Component({
@@ -15,10 +14,35 @@ export class HomePage  implements OnInit{
   dadosSalvos: any[] = [];
   dadosExibicao: any[] =[];
   loadedItems: number = 2; // Inicialmente carrega 2 itens
+  item:any;
+
+  async atualizarConteudo(event: CustomEvent<RefresherEventDetail>) {
+    console.log('Atualizando conteúdo...');
+
+    // Coloque aqui a lógica para atualizar os dados, por exemplo:
+    await this.carregarDados();
+
+    // Complete o evento de atualização quando terminar de atualizar os dados
+    event.detail.complete();
+  }
+
+  async carregarDados() {
+    window.location.reload();
+    
+  }
 
 
-  constructor(private dadosService: DadosService , private rota:NavController , private storage:Storage) { }
+  constructor(
+    private dadosService: DadosService ,
+     private rota:NavController , 
+     private storage:Storage,) { }
 
+
+
+   async updateObjeto(id:number){
+     this.rota.navigateForward(`/update-item/${id}`)
+     }
+     
   async apagar(item: any) {
     const storedItems = await this.storage.get('dadosFormulario');
     const index = storedItems.findIndex((element: any) => element.id === item.id);
@@ -30,9 +54,9 @@ export class HomePage  implements OnInit{
       // Atualiza o armazenamento removendo o item correspondente
       await this.removerItemLocalStorage(item.id);
       console.log('Item removido da lista e do Local Storage:', item.id);
+      window.location.reload()
     }
   }
-  
   async removerItemLocalStorage(itemId: any) {
     let storedItems = await this.storage.get('dadosFormulario');
   
@@ -44,11 +68,6 @@ export class HomePage  implements OnInit{
       await this.storage.set('dadosFormulario', storedItems);
     }
   }
-  
-  
-  
-  
-  
   ngOnInit() {
     this.dadosService.recuperarDados().then((dados) => {
       this.dadosSalvos = dados || [];
@@ -56,20 +75,10 @@ export class HomePage  implements OnInit{
     });
   }
   
-  
-
-  
-  
   carregarMaisItens() {
-    this.loadedItems += 1; // Aumenta o número de itens em 2
+    this.loadedItems += 2; // Aumenta o número de itens em 2
     this.dadosExibicao = this.dadosSalvos.slice(0, this.loadedItems); // Atualiza a exibição com mais itens
   }
-  
-  navNewLembrete() {
-    this.rota.navigateRoot('/new-lembrete');
-  }
-  visualizarDados() {
-    
-  }
+
   
 }

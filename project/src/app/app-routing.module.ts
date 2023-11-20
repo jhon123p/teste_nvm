@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { UpdateItemPage } from './update-item/update-item.page';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     path: 'update-item',
     loadChildren: () => import('./update-item/update-item.module').then( m => m.UpdateItemPageModule)
   },
+  { path: 'update-item/:id', component: UpdateItemPage } 
 ];
 
 @NgModule({

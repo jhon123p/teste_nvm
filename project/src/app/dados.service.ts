@@ -12,7 +12,7 @@ export class DadosService {
   salvarDados(dados: any[]) {
     return this.storage.set('dadosFormulario', dados);
   }
-
+ 
   // Método para recuperar dados
   recuperarDados() {
     return this.storage.get('dadosFormulario');
