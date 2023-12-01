@@ -1,0 +1,82 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(45deg, #FF5733, #33FF57, #5733FF, #FF5733);
+    background-size: 400% 400%;
+    animation: gradient 10s linear infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 50% 100%;
+    }
+    75% {
+        background-position: 50% 0%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    animation: buttonGradient 10s linear infinite;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    max-width: 100%;
+    text-align: right; /* Alinha o texto do rótulo à direita */
+    margin-bottom: 5px; /* Espaçamento inferior para separar os rótulos */
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Os campos de entrada ocupam 100% da largura disponível */
+}
+
+input[type="text"],
+input[type="password"] {
+    max-width: 100%; /* Garante que todos os campos de entrada tenham a mesma largura máxima */
+}
