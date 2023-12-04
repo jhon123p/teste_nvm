@@ -40,22 +40,32 @@
           <ion-item-sliding>
             <ion-item>
               <ion-label>
-                <h2>{{ dado.imagem }}</h2>
                 <p>{{ dado.nome }}</p>
-                <p>{{ dado.email }}</p>
-                <p>{{ dado.telefone }}</p>
-                <p>{{ dado.id }}</p>
+                <p>{{ dado.Detalhe }}</p>
+                <p>{{ dado.Horario }}</p>
               </ion-label>
+
+              
             </ion-item>
-        
-            <ion-item-options>
-              <ion-item-option (click)="updateObjeto(dado.id)">Favorite</ion-item-option>
             
+            <ion-item-options>
+              <ion-item-option (click)="updateObjeto(dado.id)">Atualizar</ion-item-option>
+              
               <ion-item-option (click)="apagar(dado)" color="danger">Delete</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
+          
+          <ion-item>
+
+            <ion-label position="floating">Tempo</ion-label>
+            <ion-input type="number" [(ngModel)]="tempoTotal"></ion-input>
+            
+            <h2 *ngIf="tempoAtual !== undefined">Tempo restante: {{ exibirTempoRestante() }}</h2>
+            <ion-button (click)="iniciarTemporizador()">Iniciar</ion-button>
+          </ion-item>
         
       </ion-item>
+
       
     </ion-list>
     <ion-button (click)="carregarMaisItens()">Carregar Mais</ion-button>  

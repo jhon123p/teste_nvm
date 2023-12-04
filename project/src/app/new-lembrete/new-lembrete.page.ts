@@ -25,8 +25,8 @@ export class NewLembretePage implements OnInit {
 
       this.meuForm = this.formBuilder.group({
         nome: ['',Validators.required],
-        email: ['',Validators.required],
-        telefone:['',Validators.required]
+        Detalhe: ['',Validators.required],
+        Horario:['',Validators.required]
       });
   }
   submitForm() {
@@ -48,7 +48,7 @@ export class NewLembretePage implements OnInit {
         });
       });
   
-      if (!dadosFormulario.nome || !dadosFormulario.email) {
+      if (!dadosFormulario.nome || !dadosFormulario.Detalhe) {
         this.mostrarAlerta('Campos Vazios', 'Por favor, preencha todos os campos obrigatórios.');
         return; // Encerre a função se os campos estiverem vazios
       }

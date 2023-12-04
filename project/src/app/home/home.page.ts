@@ -3,6 +3,10 @@ import { NavController } from '@ionic/angular';
 import { DadosService } from '../dados.service';
 import { Storage } from '@ionic/storage-angular';
 import { RefresherEventDetail } from '@ionic/core';
+import { Platform } from '@ionic/angular';
+
+
+
 
 
 @Component({
@@ -15,6 +19,10 @@ export class HomePage  implements OnInit{
   dadosExibicao: any[] =[];
   loadedItems: number = 2; // Inicialmente carrega 2 itens
   item:any;
+  //temporizador
+  tempoTotal: any;
+  tempoAtual: any;
+  contador: any;
 
   async atualizarConteudo(event: CustomEvent<RefresherEventDetail>) {
     console.log('Atualizando conteúdo...');
@@ -35,8 +43,47 @@ export class HomePage  implements OnInit{
   constructor(
     private dadosService: DadosService ,
      private rota:NavController , 
-     private storage:Storage,) { }
+     private storage:Storage,
+     private platform: Platform) { 
+      //inicializador do som do alarme
+     }
 
+     iniciarTemporizador() {
+      if (this.tempoTotal !== undefined && this.tempoTotal > 0) {
+        this.tempoAtual = this.tempoTotal * 60; // Converter minutos para segundos
+        this.contador = setInterval(() => {
+          if (this.tempoAtual > 0) {
+            this.tempoAtual--;
+          } else {
+            clearInterval(this.contador);
+            this.reproduzirAudio();
+          }
+        }, 1000);
+      } else {
+        console.log('Insira um valor válido para o temporizador.');
+      }
+    }
+    reproduzirAudio() {
+      const audio = new Audio();
+      audio.src = this.platform.is('android')
+        ? '/android_asset/www/assets/alarme.mp3'
+        : 'assets/alarme.mp3';
+  
+      audio.load();
+      audio.play();
+    }
+
+
+  exibirTempoRestante(): string {
+    if (this.tempoAtual === undefined) {
+      return '';
+    }
+
+    const minutos = Math.floor(this.tempoAtual / 60);
+    const segundos = this.tempoAtual % 60;
+
+    return `${minutos}m ${segundos}s`;
+  }
 
 
    async updateObjeto(id:number){
@@ -80,5 +127,4 @@ export class HomePage  implements OnInit{
     this.dadosExibicao = this.dadosSalvos.slice(0, this.loadedItems); // Atualiza a exibição com mais itens
   }
 
-  
 }
