@@ -19,10 +19,7 @@ export class HomePage  implements OnInit{
   dadosExibicao: any[] =[];
   loadedItems: number = 2; // Inicialmente carrega 2 itens
   item:any;
-  //temporizador
-  tempoTotal: any;
-  tempoAtual: any;
-  contador: any;
+
 
   async atualizarConteudo(event: CustomEvent<RefresherEventDetail>) {
     console.log('Atualizando conteúdo...');
@@ -47,22 +44,6 @@ export class HomePage  implements OnInit{
      private platform: Platform) { 
       //inicializador do som do alarme
      }
-
-     iniciarTemporizador() {
-      if (this.tempoTotal !== undefined && this.tempoTotal > 0) {
-        this.tempoAtual = this.tempoTotal * 60; // Converter minutos para segundos
-        this.contador = setInterval(() => {
-          if (this.tempoAtual > 0) {
-            this.tempoAtual--;
-          } else {
-            clearInterval(this.contador);
-            this.reproduzirAudio();
-          }
-        }, 1000);
-      } else {
-        console.log('Insira um valor válido para o temporizador.');
-      }
-    }
     reproduzirAudio() {
       const audio = new Audio();
       audio.src = this.platform.is('android')
@@ -72,18 +53,6 @@ export class HomePage  implements OnInit{
       audio.load();
       audio.play();
     }
-
-
-  exibirTempoRestante(): string {
-    if (this.tempoAtual === undefined) {
-      return '';
-    }
-
-    const minutos = Math.floor(this.tempoAtual / 60);
-    const segundos = this.tempoAtual % 60;
-
-    return `${minutos}m ${segundos}s`;
-  }
 
 
    async updateObjeto(id:number){

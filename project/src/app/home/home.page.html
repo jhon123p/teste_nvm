@@ -54,15 +54,7 @@
               <ion-item-option (click)="apagar(dado)" color="danger">Delete</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
-          
-          <ion-item>
 
-            <ion-label position="floating">Tempo</ion-label>
-            <ion-input type="number" [(ngModel)]="tempoTotal"></ion-input>
-            
-            <h2 *ngIf="tempoAtual !== undefined">Tempo restante: {{ exibirTempoRestante() }}</h2>
-            <ion-button (click)="iniciarTemporizador()">Iniciar</ion-button>
-          </ion-item>
         
       </ion-item>
 

@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { DadosService } from '../dados.service';
 
 
+
 @Component({
   selector: 'app-new-lembrete',
   templateUrl: './new-lembrete.page.html',
@@ -15,20 +16,54 @@ export class NewLembretePage implements OnInit {
 
   meuForm: FormGroup;
   selectedImage: string | ArrayBuffer | null = null;  
+  horaSelecionada: string = '';
 
   constructor(
     private rota:NavController ,
     private storage:Storage,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private dadosService: DadosService) { 
+    private dadosService: DadosService, ) { 
 
       this.meuForm = this.formBuilder.group({
         nome: ['',Validators.required],
         Detalhe: ['',Validators.required],
-        Horario:['',Validators.required]
+        Horario:['',Validators.required],
+        dataHoraSelecionada:['',Validators.required]
       });
+
+      this.verificarAlarme();
   }
+// config alarme system
+  async verificarAlarme() {
+    let storedItems = await this.storage.get('dadosFormulario');
+    if (storedItems){
+      storedItems = storedItems.filter((element:any)=> element.dataHoraSelecionada)
+    }
+  }
+
+  async dispararAlarme() {
+    
+    console.log('Alarme disparado!');
+    // Exemplo: tocar um som
+    const audio = new Audio('audio.mp3');
+    audio.play();
+  }
+
+  async configurarAlarme() {
+    if (this.horaSelecionada) {
+      await this.storage.set('dadosFormulario', this.horaSelecionada);
+      console.log('Alarme configurado para', this.horaSelecionada);
+      this.verificarAlarme();
+    } else {
+      console.log('Por favor, selecione uma hora.');
+    }
+  }
+
+
+//fim config alarme system
+
+
   submitForm() {
     if (this.meuForm.valid) {2
       const dadosFormulario = this.meuForm.value;
