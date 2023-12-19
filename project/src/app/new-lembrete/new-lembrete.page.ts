@@ -29,7 +29,7 @@ export class NewLembretePage implements OnInit {
         nome: ['',Validators.required],
         Detalhe: ['',Validators.required],
         Horario:['',Validators.required],
-        dataHoraSelecionada:['',Validators.required]
+        data:[''],
       });
 
       this.verificarAlarme();
@@ -41,7 +41,6 @@ export class NewLembretePage implements OnInit {
       storedItems = storedItems.filter((element:any)=> element.dataHoraSelecionada)
     }
   }
-
   async dispararAlarme() {
     
     console.log('Alarme disparado!');
@@ -49,7 +48,6 @@ export class NewLembretePage implements OnInit {
     const audio = new Audio('audio.mp3');
     audio.play();
   }
-
   async configurarAlarme() {
     if (this.horaSelecionada) {
       await this.storage.set('dadosFormulario', this.horaSelecionada);
@@ -59,8 +57,6 @@ export class NewLembretePage implements OnInit {
       console.log('Por favor, selecione uma hora.');
     }
   }
-
-
 //fim config alarme system
 
 
