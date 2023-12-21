@@ -4,6 +4,10 @@ import { Storage } from '@ionic/storage-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { DadosService } from '../dados.service';
+import * as dayjs from 'dayjs';
+
+
+
 
 
 
@@ -17,13 +21,15 @@ export class NewLembretePage implements OnInit {
   meuForm: FormGroup;
   selectedImage: string | ArrayBuffer | null = null;  
   horaSelecionada: string = '';
+  alarmTime: string ='';
 
   constructor(
     private rota:NavController ,
     private storage:Storage,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private dadosService: DadosService, ) { 
+    private dadosService: DadosService,
+     ) { 
 
       this.meuForm = this.formBuilder.group({
         nome: ['',Validators.required],
@@ -31,37 +37,13 @@ export class NewLembretePage implements OnInit {
         Horario:['',Validators.required],
         data:[''],
       });
-
-      this.verificarAlarme();
   }
-// config alarme system
-  async verificarAlarme() {
-    let storedItems = await this.storage.get('dadosFormulario');
-    if (storedItems){
-      storedItems = storedItems.filter((element:any)=> element.dataHoraSelecionada)
-    }
-  }
-  async dispararAlarme() {
-    
-    console.log('Alarme disparado!');
-    // Exemplo: tocar um som
-    const audio = new Audio('audio.mp3');
-    audio.play();
-  }
-  async configurarAlarme() {
-    if (this.horaSelecionada) {
-      await this.storage.set('dadosFormulario', this.horaSelecionada);
-      console.log('Alarme configurado para', this.horaSelecionada);
-      this.verificarAlarme();
-    } else {
-      console.log('Por favor, selecione uma hora.');
-    }
-  }
-//fim config alarme system
-
-
+  
+  
   submitForm() {
-    if (this.meuForm.valid) {2
+    const data = this.storage.get('dadosFormulario')
+
+    if (this.meuForm.valid) {
       const dadosFormulario = this.meuForm.value;
       const uniqueId = Date.now().toString();
 
@@ -96,7 +78,7 @@ export class NewLembretePage implements OnInit {
           });
   
           if (isDuplicate) {
-            console.log('Dados iguais, não serão salvos novamente.');
+            //console.log('Dados iguais, não serão salvos novamente.');
             this.mostrarAlerta('Dados Iguais', 'Os dados já existem.');
             return; // Encerre a função se os dados forem iguais
           }
@@ -105,23 +87,51 @@ export class NewLembretePage implements OnInit {
         if (this.selectedImage) {
           dadosFormulario.imagem = this.selectedImage; // Adicione a imagem aos dados do formulário
         }
-        console.log(dataToSave)
+        
         dataToSave.push(dadosFormulario); // Adicione os novos dados ao array
         this.storage.set('dadosFormulario', dataToSave).then(() => {
-          console.log('Dados do formulário (incluindo a imagem) salvos no Local Storage');
-          window.location.reload();
+        //  console.log('Dados do formulário (incluindo a imagem) salvos no Local Storage');
+          //window.location.reload();
+          this.setAlarm();
           
         });
-        console.log(dataToSave);
+       
       });
   
     } else {
       this.mostrarAlerta('Campos Inválidos', 'Por favor, preencha os campos corretamente.');
     }
-
+    
   }
+
+
+  //config alrme
+   async setAlarm() {
+    const Storage =  await this.storage.get('dadosFormulario');
+
+    console.log(Storage?.length)
+    Storage?.map((item:any) => {
+     // console.log({storage: dayjs(item.data) , atual:dayjs()})
+     // console.log(dayjs().isSame(dayjs(item.data) , 'minute'))
+      setInterval( async ()=>{
+        const isTime = dayjs().isSame(dayjs(item.data) , 'minute')
+       
+        const storageTime = await this.storage.get('istime')
+        const isSameStorageTime = dayjs().isSame(dayjs(storageTime), 'minute')
+
+        if (isTime && (!storageTime || !isSameStorageTime)) {
+          await this.storage.set('istime' , new Date())
+          this.mostrarAlerta(item.nome, item.Detalhe)
+        }
+      }, 1000)
+    })
+    
+  }
+
+//fim alarme
+
   async ngOnInit() {
-    //await this.storage.create();
+    this.setAlarm()
   }
   async visualizarDados() {
     const dadosArmazenados = await this.storage.get('dadosFormulario');

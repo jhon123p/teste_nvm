@@ -28,7 +28,7 @@
       <ion-input type="text" formControlName="nome" placeholder="Nome"></ion-input>
       <ion-input type="text" formControlName="Detalhe" placeholder="Detalhe"></ion-input>
       <ion-input type="text" formControlName="Horario" placeholder="Horario"></ion-input>
-      <ion-datetime presentation="date-time" [preferWheel]="true" formControlName="data"></ion-datetime>
+      <ion-datetime presentation="date-time" [preferWheel]="true" formControlName="data" [(ngModel)]="alarmTime"></ion-datetime>
       <input type="file" (change)="onFileSelected($event)" accept="image/*">
 
       <ion-button type="submit">Enviar</ion-button>
