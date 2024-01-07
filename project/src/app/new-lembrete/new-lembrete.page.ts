@@ -91,7 +91,7 @@ export class NewLembretePage implements OnInit {
         dataToSave.push(dadosFormulario); // Adicione os novos dados ao array
         this.storage.set('dadosFormulario', dataToSave).then(() => {
         //  console.log('Dados do formulário (incluindo a imagem) salvos no Local Storage');
-          //window.location.reload();
+          window.location.reload();
           this.setAlarm();
           
         });
